@@ -1,0 +1,23 @@
+name: Auto commit
+
+on:
+  schedule:
+    - cron: '15 4,8,15 * * 0-2'
+    - cron: '0 8-20 * * 1-5'
+    - cron: '10 3-11 4-20 * *'
+
+jobs:
+  auto_commit:
+    name: 'Auto push a commit to my repo'
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Create sample file with just timestamp
+      run: date +%s >> report.txt
+    - name: Commit file
+      run: |
+          git config --global user.name 'Nguyen Duc'
+          git config --global user.email 'ducnm.b21cn249@stu.ptit.edu.vn'
+          git add report.txt
+          git commit -am "Automated update profile"
+          git push
